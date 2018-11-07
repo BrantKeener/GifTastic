@@ -6,6 +6,8 @@ let reRequest = false;
 // Turn array into buttons and append to the DOM
 
 let buttonSection = document.getElementById('button_area');
+let gifBullPen = document.getElementById('queued_area');
+let gifPlaying = document.getElementById('watching_area');
 
 function buttonAdder() {
     while(buttonSection.hasChildNodes()) {
@@ -24,13 +26,22 @@ buttonAdder();
 
 // Event delegation to allow button clicks to be montiored
 
-buttonSection.addEventListener('click', function(e) {
-    let grabId = e.target.id;
-    let grabbedButton = document.getElementById(grabId);
-    let buttonPressed = grabbedButton.textContent;
-    // Maybe change the button to say "More!"
-    // Add a class to "More!" to allow you to pull more of the same gifs
-    gifRetriever(buttonPressed);
+document.addEventListener('click', function(e) {
+    let grabId = '';
+    let grabClass = '';
+    grabId = e.target.id;
+    grabClass = e.target.className;
+    if(grabClass === 'topic_button') {
+        let grabbedButton = document.getElementById(grabId);
+        let buttonPressed = grabbedButton.textContent;
+        gifRetriever(buttonPressed);
+    };
+    if(grabClass === 'topic_gif') {
+        let grabbedGif = document.getElementById(grabId);
+        gifPlayer(grabbedGif);
+    };
+    // Add a button focus function that will make it obvious which button has been selected
+    // Maybe have it say "click me for more of the same"    
 });
 
 // Turn text entered into the search field, and add to the end of existing butotns
@@ -44,6 +55,7 @@ function gifRetriever(buttonPressed) {
         url: apiQueryURL,
         method: 'GET'
     }).then(function(response) {
+        gifPublisher(response);
         console.log(response);
     });
 
@@ -52,8 +64,48 @@ function gifRetriever(buttonPressed) {
 
 // Display 10 gifs based on which button is pressed
 
-
+function gifPublisher(res) {
+    for(let i = 0 ; i < 10; i ++) {
+        let gifStill = res.data[i].images.fixed_height_small_still.url;
+        let gifMoving = res.data[i].images.fixed_height.url;
+        let gifPaste = document.createElement('img');
+        gifPaste.dataset.still = gifStill;
+        gifPaste.dataset.move = gifMoving;
+        gifPaste.dataset.state = 'still';
+        gifPaste.setAttribute('id', 'gif' + i);
+        gifPaste.setAttribute('class', 'topic_gif');
+        gifPaste.src = gifStill;
+        gifBullPen.appendChild(gifPaste);
+    };
+};
 
 // A different button press will prepend 10 more of the same topic
 
 // Display the rating above the gif
+
+// Click on a gif to play, click again to stop
+
+function gifPlayer(grabbedGif) {
+    let dataGrab = grabbedGif.dataset;
+    if(dataGrab.state === 'still') {
+        dataGrab.state = 'running';
+        gifStager(grabbedGif);
+        grabbedGif.setAttribute('src', dataGrab.move);
+    } else {
+        dataGrab.state = 'still';
+        grabbedGif.setAttribute('src', dataGrab.still);
+    };
+};
+
+// This will move the gif into the watched area
+
+function gifStager(grabbedGif) {
+    let currentlyPlaying = gifPlaying.firstChild;
+    while(gifPlaying.hasChildNodes()) {
+        currentlyPlaying.state = 'still';
+        currentlyPlaying.setAttribute('src', currentlyPlaying.dataset.still);
+        gifBullPen.appendChild(gifPlaying.firstChild);
+    };
+    gifPlaying.appendChild(grabbedGif);
+
+};
