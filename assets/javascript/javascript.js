@@ -8,6 +8,7 @@ let reRequest = false;
 let buttonSection = document.getElementById('button_area');
 let gifBullPen = document.getElementById('queued_area');
 let gifPlaying = document.getElementById('watching_area');
+let gifSeen = document.getElementById('watched_area');
 
 function buttonAdder() {
     while(buttonSection.hasChildNodes()) {
@@ -55,7 +56,7 @@ function gifRetriever(buttonPressed) {
         url: apiQueryURL,
         method: 'GET'
     }).then(function(response) {
-        gifPublisher(response);
+        gifPublisherInitial(response, buttonPressed);
         console.log(response);
     });
 
@@ -64,24 +65,42 @@ function gifRetriever(buttonPressed) {
 
 // Display 10 gifs based on which button is pressed
 
-function gifPublisher(res) {
-    for(let i = 0 ; i < 10; i ++) {
-        let gifStill = res.data[i].images.fixed_height_small_still.url;
-        let gifMoving = res.data[i].images.fixed_height.url;
-        let gifPaste = document.createElement('img');
-        gifPaste.dataset.still = gifStill;
-        gifPaste.dataset.move = gifMoving;
-        gifPaste.dataset.state = 'still';
-        gifPaste.setAttribute('id', 'gif' + i);
-        gifPaste.setAttribute('class', 'topic_gif');
-        gifPaste.src = gifStill;
-        gifBullPen.appendChild(gifPaste);
+function gifPublisherInitial(res, buttonPressed) {
+    let classCheck = gifBullPen.getAttribute('class')
+    console.log(buttonPressed);
+    console.log(classCheck);
+    if(buttonPressed !== classCheck) {
+        while(gifBullPen.hasChildNodes()) {
+            gifBullPen.removeChild(gifBullPen.firstChild);
+        };
+        stageClear();
+        gifBullPen.setAttribute('class', buttonPressed);
+        for(let i = 0 ; i < 10; i ++) {
+            let gifStill = res.data[i].images.fixed_height_small_still.url;
+            let gifMoving = res.data[i].images.fixed_height.url;
+            let gifPaste = document.createElement('img');
+            gifPaste.dataset.still = gifStill;
+            gifPaste.dataset.move = gifMoving;
+            gifPaste.dataset.state = 'still';
+            gifPaste.setAttribute('id', 'gif' + i);
+            gifPaste.setAttribute('class', 'topic_gif');
+            gifPaste.src = gifStill;
+            gifBullPen.appendChild(gifPaste);
+        };
+    } else {
+        alert("10 more!");
     };
 };
 
 // A different button press will prepend 10 more of the same topic
 
 // Display the rating above the gif
+
+function cardPublisher(res) {
+    for(let i = 0; i < 10; i++) {
+
+    }
+};
 
 // Click on a gif to play, click again to stop
 
@@ -97,15 +116,20 @@ function gifPlayer(grabbedGif) {
     };
 };
 
-// This will move the gif into the watched area
+// This will move the gif into the watched area, and also clear the watched area
 
 function gifStager(grabbedGif) {
+    stageClear();
+    gifPlaying.appendChild(grabbedGif);
+};
+
+// This clears the currently playing gif
+
+function stageClear() {
     let currentlyPlaying = gifPlaying.firstChild;
     while(gifPlaying.hasChildNodes()) {
         currentlyPlaying.state = 'still';
         currentlyPlaying.setAttribute('src', currentlyPlaying.dataset.still);
-        gifBullPen.appendChild(gifPlaying.firstChild);
+        gifSeen.appendChild(gifPlaying.firstChild);
     };
-    gifPlaying.appendChild(grabbedGif);
-
 };
