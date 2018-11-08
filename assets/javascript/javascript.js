@@ -9,6 +9,7 @@ let buttonSection = document.getElementById('button_area');
 let gifBullPen = document.getElementById('queued_area');
 let gifPlaying = document.getElementById('watching_area');
 let gifSeen = document.getElementById('watched_area');
+let gifFavorites = document.getElementById('favorite_area');
 
 function buttonAdder() {
     while(buttonSection.hasChildNodes()) {
@@ -24,6 +25,12 @@ function buttonAdder() {
 };
 
 buttonAdder();
+
+// Prevent submit default
+
+document.getElementById('add_form_submit').addEventListener('click', function(event) {
+    event.preventDefault();
+})
 
 // Event delegation to allow button clicks to be montiored
 
@@ -41,11 +48,35 @@ document.addEventListener('click', function(e) {
         let grabbedGif = document.getElementById(grabId);
         gifPlayer(grabbedGif);
     };
+    if(grabId === "add_form_submit") {
+        formValidation();
+    }
+    if(grabId === 'favorite') {
+        moveToFavorites();
+    };
     // Add a button focus function that will make it obvious which button has been selected
     // Maybe have it say "click me for more of the same"    
 });
 
 // Turn text entered into the search field, and add to the end of existing butotns
+
+function formValidation() {
+    let addChecker = document.forms['button_add']['add_this'];
+    if(addChecker.value === '') {
+        alert('Please enter a Gif keyword you would like to search');
+    } else {
+        formToArray(addChecker);
+    };
+};
+
+function formToArray(addChecker) {
+    let toArray = addChecker.value;
+    if(topics.indexOf(toArray) === -1) {
+        topics.push(toArray);
+    }
+    addChecker.value = '';
+    buttonAdder();
+};
 
 // API call to GIPHY based on which butotns are pressed
 
@@ -85,7 +116,9 @@ function gifPublisherInitial(res, buttonPressed) {
     } else {
         alert("10 more!");
     };
-    stageClear();
+    if(gifPlaying.childNodes[3] !== undefined) {
+        stageClear();
+    };
 };
 
 // A different button press will prepend 10 more of the same topic
@@ -122,6 +155,12 @@ function gifStager(grabbedGif) {
 };
 
 // This clears the currently playing gif
+
+function moveToFavorites() {
+    let currentlyPlaying = gifPlaying.childNodes[3];
+    gifFavorites.appendChild(currentlyPlaying);
+    stopCleared(currentlyPlaying);
+};
 
 function stageClear() {
     let currentlyPlaying = gifPlaying.childNodes[3];
