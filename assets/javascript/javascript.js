@@ -10,6 +10,7 @@ let gifBullPen = document.getElementById('queued_area');
 let gifPlaying = document.getElementById('watching_area');
 let gifSeen = document.getElementById('watched_area');
 let gifFavorites = document.getElementById('favorite_area');
+let favoritesLocalStorage = 1;
 
 function buttonAdder() {
     while(buttonSection.hasChildNodes()) {
@@ -30,7 +31,7 @@ buttonAdder();
 
 document.getElementById('add_form_submit').addEventListener('click', function(event) {
     event.preventDefault();
-})
+});
 
 // Event delegation to allow button clicks to be montiored
 
@@ -44,7 +45,7 @@ document.addEventListener('click', function(e) {
         let buttonPressed = grabbedButton.textContent;
         gifRetriever(buttonPressed);
     };
-    if(grabClass === 'topic_gif') {
+    if(grabClass === 'topic_gif' || grabClass === 'topic_gif favorited_gif') {
         let grabbedGif = document.getElementById(grabId);
         gifPlayer(grabbedGif);
     };
@@ -159,7 +160,12 @@ function gifStager(grabbedGif) {
 
 function moveToFavorites() {
     let currentlyPlaying = gifPlaying.childNodes[3];
-    currentlyPlaying.setAttribute('class', 'favorited_gif');
+    console.log(currentlyPlaying.dataset.still);
+    if(currentlyPlaying.className !== 'topic_gif favorited_gif') {
+        localStorage.setItem(favoritesLocalStorage, currentlyPlaying.dataset.still);
+        favoritesLocalStorage++;
+    };
+    currentlyPlaying.setAttribute('class', 'topic_gif favorited_gif');
     gifFavorites.appendChild(currentlyPlaying);
     stopCleared(currentlyPlaying);
 };
@@ -168,12 +174,15 @@ function moveToFavorites() {
 
 function stageClear() {
     let currentlyPlaying = gifPlaying.childNodes[3];
-    gifSeen.appendChild(currentlyPlaying);
-    stopCleared(currentlyPlaying);
+    if(currentlyPlaying.className === 'topic_gif favorited_gif') {
+        moveToFavorites();
+    } else {
+        gifSeen.appendChild(currentlyPlaying);
+        stopCleared(currentlyPlaying);
+    };
 };
 
 function stopCleared(currentlyPlaying) {
-    console.log(currentlyPlaying);
     currentlyPlaying.dataset.state = 'still'
     currentlyPlaying.setAttribute('src', currentlyPlaying.dataset.still);
 };
