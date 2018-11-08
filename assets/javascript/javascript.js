@@ -154,13 +154,17 @@ function gifStager(grabbedGif) {
     gifPlaying.appendChild(grabbedGif);
 };
 
-// This clears the currently playing gif
+
+// Clears currently playing gif and stores it in favorites
 
 function moveToFavorites() {
     let currentlyPlaying = gifPlaying.childNodes[3];
+    currentlyPlaying.setAttribute('class', 'favorited_gif');
     gifFavorites.appendChild(currentlyPlaying);
     stopCleared(currentlyPlaying);
 };
+
+// This clears the currently playing gif
 
 function stageClear() {
     let currentlyPlaying = gifPlaying.childNodes[3];
