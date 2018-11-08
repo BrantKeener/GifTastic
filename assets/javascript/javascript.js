@@ -51,15 +51,12 @@ document.addEventListener('click', function(e) {
 
 function gifRetriever(buttonPressed) { 
     let apiQueryURL = `https://api.giphy.com/v1/gifs/search?q=${buttonPressed}&api_key=t8Z9NbgWFivLfTMNNBZORucEY3zm66zC&`;
-    console.log(apiQueryURL);
     $.ajax({
         url: apiQueryURL,
         method: 'GET'
     }).then(function(response) {
         gifPublisherInitial(response, buttonPressed);
-        console.log(response);
     });
-
 };
 
 
@@ -67,13 +64,10 @@ function gifRetriever(buttonPressed) {
 
 function gifPublisherInitial(res, buttonPressed) {
     let classCheck = gifBullPen.getAttribute('class')
-    console.log(buttonPressed);
-    console.log(classCheck);
     if(buttonPressed !== classCheck) {
         while(gifBullPen.hasChildNodes()) {
             gifBullPen.removeChild(gifBullPen.firstChild);
         };
-        // stageClear();
         gifBullPen.textContent = 'Not Yet Watched';
         gifBullPen.setAttribute('class', buttonPressed);
         for(let i = 0 ; i < 10; i ++) {
@@ -91,6 +85,7 @@ function gifPublisherInitial(res, buttonPressed) {
     } else {
         alert("10 more!");
     };
+    stageClear();
 };
 
 // A different button press will prepend 10 more of the same topic
@@ -120,17 +115,22 @@ function gifPlayer(grabbedGif) {
 // This will move the gif into the watched area, and also clear the watched area
 
 function gifStager(grabbedGif) {
-    stageClear();
+    if(gifPlaying.childNodes.length > 3) {
+        stageClear();
+    }
     gifPlaying.appendChild(grabbedGif);
 };
 
 // This clears the currently playing gif
 
 function stageClear() {
-    let currentlyPlaying = gifPlaying.firstElementChild;
-    while(gifPlaying.hasChildNodes()) {
-        currentlyPlaying.state = 'still';
-        currentlyPlaying.setAttribute('src', currentlyPlaying.dataset.still);
-        gifSeen.appendChild(gifPlaying.firstChild);
-    };
+    let currentlyPlaying = gifPlaying.childNodes[3];
+    gifSeen.appendChild(currentlyPlaying);
+    stopCleared(currentlyPlaying);
+};
+
+function stopCleared(currentlyPlaying) {
+    console.log(currentlyPlaying);
+    currentlyPlaying.dataset.state = 'still'
+    currentlyPlaying.setAttribute('src', currentlyPlaying.dataset.still);
 };
