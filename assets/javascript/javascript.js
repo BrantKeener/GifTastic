@@ -47,19 +47,29 @@ document.addEventListener('click', function(e) {
 
 // Turn text entered into the search field, and add to the end of existing butotns
 
+// document.getElementById('add_form_button').addEventListener('click', function() {
+//     console.log(this);
+//     this.preventDefault();
+// });
+// function formValidation(submitButton){
+//     console.log(submitButton);
+//     submitButton.preventDefault();
+//     let addIt = document.forms['button_add']['add_this'].val();
+//     if(addIt === ''){
+//         alert("There's nothing here!");
+//     }
+// };
+
 // API call to GIPHY based on which butotns are pressed
 
 function gifRetriever(buttonPressed) { 
     let apiQueryURL = `https://api.giphy.com/v1/gifs/search?q=${buttonPressed}&api_key=t8Z9NbgWFivLfTMNNBZORucEY3zm66zC&`;
-    console.log(apiQueryURL);
     $.ajax({
         url: apiQueryURL,
         method: 'GET'
     }).then(function(response) {
         gifPublisherInitial(response, buttonPressed);
-        console.log(response);
     });
-
 };
 
 
@@ -67,6 +77,7 @@ function gifRetriever(buttonPressed) {
 
 function gifPublisherInitial(res, buttonPressed) {
     let classCheck = gifBullPen.getAttribute('class')
+    console.log(res);
     console.log(buttonPressed);
     console.log(classCheck);
     if(buttonPressed !== classCheck) {
@@ -75,6 +86,7 @@ function gifPublisherInitial(res, buttonPressed) {
         };
         stageClear();
         gifBullPen.setAttribute('class', buttonPressed);
+        console.log(classCheck);
         for(let i = 0 ; i < 10; i ++) {
             let gifStill = res.data[i].images.fixed_height_small_still.url;
             let gifMoving = res.data[i].images.fixed_height.url;
@@ -96,11 +108,11 @@ function gifPublisherInitial(res, buttonPressed) {
 
 // Display the rating above the gif
 
-function cardPublisher(res) {
-    for(let i = 0; i < 10; i++) {
+// function cardPublisher(res) {
+//     for(let i = 0; i < 10; i++) {
 
-    }
-};
+//     }
+// };
 
 // Click on a gif to play, click again to stop
 
