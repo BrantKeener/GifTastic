@@ -1,0 +1,32 @@
+
+#content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#main_col1, #main_col2, #button_area, #watching_area{
+    display: grid;
+}
+
+#main_col1 {
+    grid-template-rows: 100px 25px 50px 1fr 50px 1fr;
+}
+
+#main_col2 {
+    grid-template-rows: repeat(2, 1fr);
+}
+
+#button_area {
+    grid-template-columns: repeat(3, 1fr);
+    padding-bottom: 10%;
+}
+
+#watching_area {
+    grid-template-rows: 25px 25px 1fr;
+}
+
+h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

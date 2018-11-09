@@ -1,7 +1,7 @@
 
 // Build an array to store the button data
 
-let topics = ['rocket', 'laser', 'space', 'planet', 'satellite', 'alien', 'shuttle', 'meteor', 'asteroid'];
+let topics = ['rocket', 'space', 'planet', 'satellite', 'alien', 'shuttle'];
 let reRequest = false;
 // Turn array into buttons and append to the DOM
 
@@ -48,8 +48,9 @@ document.addEventListener('click', function(e) {
         gifRetriever(buttonPressed);
     };
     if(grabClass === 'topic_gif' || grabClass === 'topic_gif favorited_gif') {
+        console.log('Hey!')
         let grabbedGif = document.getElementById(grabId);
-        gifPlayer(grabbedGif);
+        gifPlayer(grabbedGif, grabbedGif.parentNode);
     };
     if(grabId === "add_form_submit") {
         formValidation();
@@ -74,8 +75,15 @@ function formValidation() {
 
 function formToArray(addChecker) {
     let toArray = addChecker.value;
-    if(topics.indexOf(toArray) === -1) {
-        topics.push(toArray);
+    if(topics.length < 12) {
+        if(topics.indexOf(toArray) === -1) {
+            topics.push(toArray);
+        };
+    } else {
+        if(topics.indexOf(toArray) === -1) {
+            topics.shift();
+            topics.unshift(toArray);
+        };
     }
     addChecker.value = '';
     buttonAdder();
@@ -103,19 +111,25 @@ function gifPublisherInitial(res, buttonPressed) {
         while(gifBullPen.hasChildNodes()) {
             gifBullPen.removeChild(gifBullPen.firstChild);
         };
-        gifBullPen.textContent = 'Not Yet Watched';
         gifBullPen.setAttribute('class', buttonPressed);
         for(let i = 0 ; i < 10; i ++) {
             let gifStill = res.data[i].images.fixed_height_small_still.url;
             let gifMoving = res.data[i].images.fixed_height.url;
-            let gifPaste = document.createElement('img');
-            gifPaste.dataset.still = gifStill;
-            gifPaste.dataset.move = gifMoving;
-            gifPaste.dataset.state = 'still';
-            gifPaste.setAttribute('id', 'gif' + i);
-            gifPaste.setAttribute('class', 'topic_gif');
-            gifPaste.src = gifStill;
-            gifBullPen.appendChild(gifPaste);
+            let gifHolder = document.createElement('figure');
+            let gifImage = document.createElement('img');
+            let gifRating = res.data[i].rating;
+            let gifTitle = res.data[i].title;
+            let gifCaption = `Title: ${gifTitle} / Rating: ${gifRating}`;
+            gifImage.dataset.still = gifStill;
+            gifImage.dataset.move = gifMoving;
+            gifImage.dataset.state = 'still';
+            gifImage.setAttribute('id', 'gif' + i);
+            gifImage.setAttribute('class', 'topic_gif');
+            gifImage.src = gifStill;
+            gifHolder.append(gifImage);
+            gifHolder.append(gifCaption);
+            gifHolder.setAttribute('class', 'gif_house');
+            gifBullPen.appendChild(gifHolder);
         };
     } else {
         alert("10 more!");
@@ -138,11 +152,11 @@ function cardPublisher(res) {
 
 // Click on a gif to play, click again to stop
 
-function gifPlayer(grabbedGif) {
+function gifPlayer(grabbedGif, gifParent) {
     let dataGrab = grabbedGif.dataset;
     if(dataGrab.state === 'still') {
         dataGrab.state = 'running';
-        gifStager(grabbedGif);
+        gifStager(gifParent);
         grabbedGif.setAttribute('src', dataGrab.move);
     } else {
         dataGrab.state = 'still';
@@ -152,11 +166,11 @@ function gifPlayer(grabbedGif) {
 
 // This will move the gif into the watched area, and also clear the watched area
 
-function gifStager(grabbedGif) {
+function gifStager(gifParent) {
     if(gifPlaying.childNodes[watchingAreaNode] !== undefined) {
         stageClear();
     };
-    gifPlaying.appendChild(grabbedGif);
+    gifPlaying.appendChild(gifParent);
     // downloadGifSet();
 };
 
