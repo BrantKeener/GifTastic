@@ -12,6 +12,7 @@ let gifSeen = document.getElementById('watched_area');
 let gifFavorites = document.getElementById('favorite_area');
 let favoritesLocalStorage = 1;
 let watchingAreaNode = 7;
+let gifIdNumber = 0;
 // let downloadButton = document.getElementById('download');
 
 function buttonAdder() {
@@ -125,13 +126,14 @@ function gifPublisherInitial(res, buttonPressed) {
             gifImage.dataset.still = gifStill;
             gifImage.dataset.move = gifMoving;
             gifImage.dataset.state = 'still';
-            gifImage.setAttribute('id', 'gif' + i);
+            gifImage.setAttribute('id', 'gif' + gifIdNumber);
             gifImage.setAttribute('class', 'topic_gif');
             gifImage.src = gifStill;
             gifHolder.appendChild(gifImage);
             gifHolder.appendChild(gifCaption);
             gifHolder.setAttribute('class', 'gif_house');
             gifDiv.appendChild(gifHolder);
+            gifIdNumber++;
         };
     } else {
         alert("10 more!");
