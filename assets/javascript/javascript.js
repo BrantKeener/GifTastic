@@ -11,7 +11,7 @@ let gifPlaying = document.getElementById('watching_area');
 let gifSeen = document.getElementById('watched_area');
 let gifFavorites = document.getElementById('favorite_area');
 let favoritesLocalStorage = 1;
-let watchingAreaNode = 5;
+let watchingAreaNode = 7;
 // let downloadButton = document.getElementById('download');
 
 function buttonAdder() {
@@ -48,7 +48,6 @@ document.addEventListener('click', function(e) {
         gifRetriever(buttonPressed);
     };
     if(grabClass === 'topic_gif' || grabClass === 'topic_gif favorited_gif') {
-        console.log('Hey!')
         let grabbedGif = document.getElementById(grabId);
         gifPlayer(grabbedGif, grabbedGif.parentNode);
     };
@@ -98,7 +97,6 @@ function gifRetriever(buttonPressed) {
         method: 'GET'
     }).then(function(response) {
         gifPublisherInitial(response, buttonPressed);
-        console.log(response);
     });
 };
 
@@ -108,35 +106,37 @@ function gifRetriever(buttonPressed) {
 function gifPublisherInitial(res, buttonPressed) {
     let classCheck = gifBullPen.getAttribute('class')
     if(buttonPressed !== classCheck) {
-        while(gifBullPen.hasChildNodes()) {
-            gifBullPen.removeChild(gifBullPen.firstChild);
+        while(gifBullPen.childNodes[5] !== undefined) {
+            gifBullPen.removeChild(gifBullPen.secondChild);
         };
         gifBullPen.setAttribute('class', buttonPressed);
         for(let i = 0 ; i < 10; i ++) {
+            let gifDiv = document.getElementById('gif_div');
             let gifStill = res.data[i].images.fixed_height_small_still.url;
             let gifMoving = res.data[i].images.fixed_height.url;
             let gifHolder = document.createElement('figure');
             let gifImage = document.createElement('img');
+            let gifCaption = document.createElement('figcaption');
             let gifRating = res.data[i].rating;
             let gifTitle = res.data[i].title;
-            let gifCaption = `Title: ${gifTitle} / Rating: ${gifRating}`;
+            gifCaption.textContent = `Category: ${buttonPressed} / Rating: ${gifRating}`;
             gifImage.dataset.still = gifStill;
             gifImage.dataset.move = gifMoving;
             gifImage.dataset.state = 'still';
             gifImage.setAttribute('id', 'gif' + i);
             gifImage.setAttribute('class', 'topic_gif');
             gifImage.src = gifStill;
-            gifHolder.append(gifImage);
-            gifHolder.append(gifCaption);
+            gifHolder.appendChild(gifImage);
+            gifHolder.appendChild(gifCaption);
             gifHolder.setAttribute('class', 'gif_house');
-            gifBullPen.appendChild(gifHolder);
+            gifDiv.appendChild(gifHolder);
         };
     } else {
         alert("10 more!");
     };
-    if(gifPlaying.childNodes[watchingAreaNode] !== undefined) {
-        stageClear();
-    };
+    // if(gifPlaying.childNodes[watchingAreaNode] !== undefined) {
+    //     stageClear();
+    // };
 };
 
 // A different button press will prepend 10 more of the same topic
@@ -154,6 +154,9 @@ function cardPublisher(res) {
 
 function gifPlayer(grabbedGif, gifParent) {
     let dataGrab = grabbedGif.dataset;
+    console.log(grabbedGif);
+    console.log(gifParent);
+    console.log(dataGrab);
     if(dataGrab.state === 'still') {
         dataGrab.state = 'running';
         gifStager(gifParent);
@@ -167,10 +170,13 @@ function gifPlayer(grabbedGif, gifParent) {
 // This will move the gif into the watched area, and also clear the watched area
 
 function gifStager(gifParent) {
+    console.log(gifParent);
     if(gifPlaying.childNodes[watchingAreaNode] !== undefined) {
+        console.log(gifParent);
         stageClear();
     };
     gifPlaying.appendChild(gifParent);
+    console.log(gifParent);
     // downloadGifSet();
 };
 
@@ -185,12 +191,10 @@ function gifStager(gifParent) {
 
 function moveToFavorites() {
     let currentlyPlaying = gifPlaying.childNodes[watchingAreaNode];
-    if(currentlyPlaying.className !== 'topic_gif favorited_gif') {
-        localStorage.setItem(favoritesLocalStorage, currentlyPlaying.dataset.still);
-        favoritesLocalStorage++;
+    if(currentlyPlaying.childNodes[0].className !== 'topic_gif favorited_gif') {
+        currentlyPlaying.childNodes[0].setAttribute('class', 'topic_gif favorited_gif');
+        gifFavorites.appendChild(currentlyPlaying);
     };
-    currentlyPlaying.setAttribute('class', 'topic_gif favorited_gif');
-    gifFavorites.appendChild(currentlyPlaying);
     stopCleared(currentlyPlaying);
 };
 
@@ -198,17 +202,17 @@ function moveToFavorites() {
 
 function stageClear() {
     let currentlyPlaying = gifPlaying.childNodes[watchingAreaNode];
-    if(currentlyPlaying.className === 'topic_gif favorited_gif') {
+    if(currentlyPlaying.childNodes[0].className === 'topic_gif favorited_gif') {
         moveToFavorites();
     } else {
-        gifSeen.appendChild(currentlyPlaying);
         stopCleared(currentlyPlaying);
+        gifSeen.appendChild(currentlyPlaying);
     };
 };
 
 function stopCleared(currentlyPlaying) {
     if(currentlyPlaying !== undefined) {
-        currentlyPlaying.dataset.state = 'still'
-        currentlyPlaying.setAttribute('src', currentlyPlaying.dataset.still);
+        currentlyPlaying.childNodes[0].dataset.state = 'still'
+        currentlyPlaying.childNodes[0].setAttribute('src', currentlyPlaying.childNodes[0].dataset.still);
     };
 };
