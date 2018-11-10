@@ -39,8 +39,19 @@ body {
     margin: 5%;
 }
 
+#watching_area {
+    height: 35%;
+}
+
+#favorite_area {
+    overflow-y: scroll;
+    height: calc(60vh - 1px);
+}
+
 #watched_area {
     background: green;
+    height: calc(100vh - 1px);
+    overflow-y: scroll;
 }
 
 .unwatched {
