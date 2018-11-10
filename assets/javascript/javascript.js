@@ -35,6 +35,7 @@ document.getElementById('add_form_submit').addEventListener('click', function(ev
     event.preventDefault();
 });
 
+console.log(gifBullPen.childNodes[3]);
 // Event delegation to allow button clicks to be montiored
 
 document.addEventListener('click', function(e) {
@@ -57,8 +58,6 @@ document.addEventListener('click', function(e) {
     if(grabId === 'favorite') {
         moveToFavorites();
     };
-    // Add a button focus function that will make it obvious which button has been selected
-    // Maybe have it say "click me for more of the same"    
 });
 
 // Turn text entered into the search field, and add to the end of existing butotns
@@ -104,11 +103,15 @@ function gifRetriever(buttonPressed) {
 // Display 10 gifs based on which button is pressed
 
 function gifPublisherInitial(res, buttonPressed) {
-    let classCheck = gifBullPen.getAttribute('class')
+    let classCheck = gifBullPen.getAttribute('class');
+    let childCheck = gifBullPen.childNodes[3].hasChildNodes();
+    console.log(gifBullPen.childNodes[3]);
     if(buttonPressed !== classCheck) {
-        while(gifBullPen.childNodes[5] !== undefined) {
-            gifBullPen.removeChild(gifBullPen.secondChild);
+        while(childCheck === true) {
+            gifBullPen.childNodes[3].removeChild(gifBullPen.childNodes[3].firstChild);
+            childCheck = gifBullPen.childNodes[3].hasChildNodes();
         };
+        console.log(gifBullPen.childNodes[3]);
         gifBullPen.setAttribute('class', buttonPressed);
         for(let i = 0 ; i < 10; i ++) {
             let gifDiv = document.getElementById('gif_div');
@@ -118,7 +121,6 @@ function gifPublisherInitial(res, buttonPressed) {
             let gifImage = document.createElement('img');
             let gifCaption = document.createElement('figcaption');
             let gifRating = res.data[i].rating;
-            let gifTitle = res.data[i].title;
             gifCaption.textContent = `Category: ${buttonPressed} / Rating: ${gifRating}`;
             gifImage.dataset.still = gifStill;
             gifImage.dataset.move = gifMoving;
@@ -134,29 +136,15 @@ function gifPublisherInitial(res, buttonPressed) {
     } else {
         alert("10 more!");
     };
-    // if(gifPlaying.childNodes[watchingAreaNode] !== undefined) {
-    //     stageClear();
-    // };
 };
 
 // A different button press will prepend 10 more of the same topic
 
-// Display the rating above the gif
-
-function cardPublisher(res) {
-    for(let i = 0; i < 10; i++) {
-        letGifInfo = document.createElement('p')
-
-    };
-};
 
 // Click on a gif to play, click again to stop
 
 function gifPlayer(grabbedGif, gifParent) {
     let dataGrab = grabbedGif.dataset;
-    console.log(grabbedGif);
-    console.log(gifParent);
-    console.log(dataGrab);
     if(dataGrab.state === 'still') {
         dataGrab.state = 'running';
         gifStager(gifParent);
@@ -170,22 +158,11 @@ function gifPlayer(grabbedGif, gifParent) {
 // This will move the gif into the watched area, and also clear the watched area
 
 function gifStager(gifParent) {
-    console.log(gifParent);
     if(gifPlaying.childNodes[watchingAreaNode] !== undefined) {
-        console.log(gifParent);
         stageClear();
     };
     gifPlaying.appendChild(gifParent);
-    console.log(gifParent);
-    // downloadGifSet();
 };
-
-// Allows user to download gif
-
-// function downloadGifSet() {
-//     let gifToDownload = gifPlaying.childNodes[watchingAreaNode].dataset.move;
-//     downloadButton.setAttribute('href', gifToDownload);
-// };
 
 // Clears currently playing gif and stores it in favorites
 
@@ -194,8 +171,11 @@ function moveToFavorites() {
     if(currentlyPlaying.childNodes[0].className !== 'topic_gif favorited_gif') {
         currentlyPlaying.childNodes[0].setAttribute('class', 'topic_gif favorited_gif');
         gifFavorites.appendChild(currentlyPlaying);
+        stopCleared(currentlyPlaying);
+    } else {
+        gifFavorites.appendChild(currentlyPlaying);
+        stopCleared(currentlyPlaying);
     };
-    stopCleared(currentlyPlaying);
 };
 
 // This clears the currently playing gif
