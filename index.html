@@ -10,7 +10,13 @@
 </head>
 <body>
     <section id="content">
-        <section id="main_col1">
+        <section id="main_col_left">
+            <section id="queued_area">
+                <h1 class='unwatched'>Not Yet Watched</h1>
+                <div id='gif_div'></div>
+            </section>
+        </section>
+        <section id="main_col_center">
             <section id="button_area"></section>
             <section id="input_area">
                 <form name="button_add">
@@ -19,23 +25,20 @@
                 </form>
             </section>
             <section id="watching_area">
-                <h1>Now Watching</h1>
+                <h1 class="now_watching">Now Watching</h1>
                 <button id="favorite">Add to Favorites</button>
                 <!-- <a id="download" href= "" target="_blank" download="downloaded_gif">Download</a> -->
             </section>
-            <section id="favorite_area">
-                <h1>These are your favorites!</h1>
-            </section>
         </section>
-        <section id="main_col2">
-            <section id="queued_area">
-                <h1 class='unwatched'>Not Yet Watched</h1>
-                <div id='gif_div'></div>
-            </section>
+        <section id="main_col_right">
             <section id="watched_area">
-                <h1>Already Seen</h1>
+                <h1 class="watched">Already Seen</h1>
+                <div id="seen_gif_div"></div>
             </section>
         </section>
+        <!-- <section id="favorite_area">
+            <h1 class="favorites">These are your favorites!</h1>
+        </section> -->
     </section>
 </body>
 </html>
