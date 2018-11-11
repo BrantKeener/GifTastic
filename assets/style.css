@@ -43,7 +43,7 @@ body {
     grid-gap: 1%;
     justify-items: center;
     align-items: center;
-    height: calc(100vh - 72px);
+    height: calc(100vh - 140px);
     overflow-y: scroll;
 }
 
@@ -79,8 +79,10 @@ body {
 
 #seen_gif_div {
     display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 2fr);
     justify-items: center;
-    height: calc(100vh - 65px);
+    height: calc(100vh - 140px);
     overflow-y: scroll;
 }
 
