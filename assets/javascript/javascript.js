@@ -7,11 +7,11 @@ let reRequest = false;
 
 let buttonSection = document.getElementById('button_area');
 let gifBullPen = document.getElementById('queued_area');
-let gifPlaying = document.getElementById('watching_area');
+let gifPlaying = document.getElementById('currently_watching');
 let gifSeen = document.getElementById('seen_gif_div');
 let gifFavorites = document.getElementById('favorite_area');
 let favoritesLocalStorage = 1;
-let watchingAreaNode = 7;
+let watchingAreaNode = 0;
 let gifIdNumber = 0;
 // let downloadButton = document.getElementById('download');
 
@@ -36,7 +36,6 @@ document.getElementById('add_form_submit').addEventListener('click', function(ev
     event.preventDefault();
 });
 
-console.log(gifBullPen.childNodes[3]);
 // Event delegation to allow button clicks to be montiored
 
 document.addEventListener('click', function(e) {
@@ -106,13 +105,11 @@ function gifRetriever(buttonPressed) {
 function gifPublisherInitial(res, buttonPressed) {
     let classCheck = gifBullPen.getAttribute('class');
     let childCheck = gifBullPen.childNodes[3].hasChildNodes();
-    console.log(gifBullPen.childNodes[3]);
     if(buttonPressed !== classCheck) {
         while(childCheck === true) {
             gifBullPen.childNodes[3].removeChild(gifBullPen.childNodes[3].firstChild);
             childCheck = gifBullPen.childNodes[3].hasChildNodes();
         };
-        console.log(gifBullPen.childNodes[3]);
         gifBullPen.setAttribute('class', buttonPressed);
         for(let i = 0 ; i < 10; i ++) {
             let gifDiv = document.getElementById('gif_div');
