@@ -231,14 +231,18 @@ h1 {
 }
 
 @media screen and (max-width: 750px) {
+    body {
+        height: auto;
+        overflow: auto;
+    }
+
     #content {
         display: block;
-        overflow: scroll;
+        overflow: auto;
     }
 
     #main_col_left, #main_col_center, #main_col_right{
         display: block;
-        max-width: 90%;
         overflow: auto;
     }
 }
