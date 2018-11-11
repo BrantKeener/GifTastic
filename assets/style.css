@@ -245,7 +245,7 @@ h1 {
     #main_col_left, #main_col_center, #main_col_right{
         display: block;
         overflow: auto;
-        max-width: 98%;
+        max-width: 95%;
     }
 
     #gif_div {
