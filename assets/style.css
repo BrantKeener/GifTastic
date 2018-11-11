@@ -250,6 +250,7 @@ h1 {
 
     #gif_div {
         grid-template-columns: 1fr;
+        justify-items: right;
     }
 
     #button_and_input {
