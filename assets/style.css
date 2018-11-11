@@ -234,6 +234,7 @@ h1 {
     body {
         height: auto;
         overflow: auto;
+        background-color: #800000;
     }
 
     #content {
@@ -244,5 +245,20 @@ h1 {
     #main_col_left, #main_col_center, #main_col_right{
         display: block;
         overflow: auto;
+        max-width: 98%;
+    }
+
+    #gif_div {
+        grid-template-columns: 1fr;
+    }
+
+    #button_and_input {
+        left: 2%;
+        top: 15%;
+    }
+
+    #favorite_area {
+        left: 2%;
+        top: 40%;
     }
 }
