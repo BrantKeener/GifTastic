@@ -78,6 +78,8 @@ body {
 }
 
 #seen_gif_div {
+    display: grid;
+    justify-items: center;
     height: calc(100vh - 65px);
     overflow-y: scroll;
 }
