@@ -148,9 +148,6 @@ function gifPlayer(grabbedGif, gifParent) {
         dataGrab.state = 'running';
         gifStager(gifParent);
         grabbedGif.setAttribute('src', dataGrab.move);
-    } else {
-        dataGrab.state = 'still';
-        grabbedGif.setAttribute('src', dataGrab.still);
     };
 };
 
