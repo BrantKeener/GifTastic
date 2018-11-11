@@ -56,7 +56,7 @@ body {
     justify-content: center;
 }
 
-.topic_button {
+.topic_button, #favorite {
     background-color: black;
     border-color: #800000;
     border-radius: .25rem;
