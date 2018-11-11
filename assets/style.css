@@ -43,7 +43,7 @@ body {
     grid-gap: 1%;
     justify-items: center;
     align-items: center;
-    height: calc(100vh - 140px);
+    height: calc(100vh - 200px);
     overflow-y: auto;
 }
 
@@ -65,25 +65,22 @@ body {
     color: var(--gold-font);
 }
 
-/* #button_and_input {
-    position: absolute;
-    top: -190px;
-    min-width: 540px;
-    max-width: 540px;
-    box-sizing: border-box;
-    background-image: url(images/red_velvet.jpg);
-    background-size: cover;
-    border-radius: 1rem;
-    border: .25rem solid var(--gold-font);
-} */
-
 #button_and_input {
     position: absolute;
     width: 250px;
-    height: 400px;
-    left: 35%;
-    bottom: -340px;
+    height: 225px;
+    left: 36%;
+    bottom: -165px;
     transition: 0.3s;
+}
+
+#button_and_input:hover {
+    bottom: 0px;
+}
+
+#button_and_form_area {
+    background-color: rgba(147, 147, 147, 0.5);
+    padding-bottom: 5%;
 }
 
 #favorite_area {
@@ -119,7 +116,7 @@ body {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(3, 2fr);
     justify-items: center;
-    height: calc(100vh - 140px);
+    height: calc(100vh - 190px);
     overflow-y: auto;
 }
 
