@@ -1,8 +1,14 @@
 
+:root {
+    --main-font: 'Monoton', cursive;
+    --gold-font: gold;
+}
+
 body {
     margin: 0%;
     padding: 0%;
     height: 98%;
+    overflow: hidden;
 }
 
 #content {
@@ -11,7 +17,8 @@ body {
 }
 
 #main_col_center {
-    background: grey;
+    background-image: url(images/peter-lewicki-411606-unsplash.jpg);
+    background-size: cover;
     justify-content: center;
     align-content: center;
     height: calc(100vh - 2px);
@@ -19,6 +26,8 @@ body {
 }
 
 #main_col_left {
+    background-image: url(images/16mm-Film-Cans-Left.jpg);
+    background-size: cover;
     margin: 0%;
     display: flex;
 }
@@ -39,10 +48,8 @@ body {
 }
 
 #watching_area {
-    height: 35%;
-    height: calc(100vh - 72px);
-    background-image: url(images/peter-lewicki-411606-unsplash.jpg);
-    background-size: cover;
+    display: grid;
+    justify-items: center;
 }
 
 .topic_button {
@@ -50,6 +57,7 @@ body {
     border: grey;
     padding: 1%;
     margin: 2%;
+    color: var(--gold-font);
 }
 
 #button_and_input {
@@ -64,11 +72,9 @@ body {
 }
 
 #main_col_right {
+    background-image: url(images/16mm-Film-Cans-Right.jpg);
+    background-size: cover;
     margin: 0%;
-}
-
-#watched_area {
-    background: green;
 }
 
 #seen_gif_div {
@@ -81,8 +87,8 @@ body {
     background: pink;
     padding: 5%;
     margin: 3%;
-    min-width: 80%;
-    max-width: 90%;
+    min-width: 60%;
+    max-width: 70%;
     height: auto;
     text-align: center;
     border: black;
@@ -97,10 +103,12 @@ body {
 h1 {
     text-align: center;
     padding: 4% 0%;
-    margin: 0% 2%;
-    font-size: 1.5rem;
+    margin: 2% 2%;
+    font-family: var(--main-font);
+    font-size: 3rem;
     border-left: .25rem solid black;
     border-right: .25rem solid black;
     border-radius: 1rem;
-    background-color: white;
+    background-image: url(images/red_velvet.jpg);
+    color: var(--gold-font);
 }
