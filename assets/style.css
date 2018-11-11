@@ -40,6 +40,22 @@ body {
 
 #watching_area {
     height: 35%;
+    height: calc(100vh - 72px);
+    background-image: url(images/peter-lewicki-411606-unsplash.jpg);
+    background-size: cover;
+}
+
+.topic_button {
+    background-color: black;
+    border: grey;
+    padding: 1%;
+    margin: 2%;
+}
+
+#button_and_input {
+    background-image: url(images/red_velvet.jpg);
+    background-size: cover;
+    padding: 5%;
 }
 
 #favorite_area {
@@ -58,14 +74,6 @@ body {
 #seen_gif_div {
     height: calc(100vh - 65px);
     overflow-y: scroll;
-}
-
-.unwatched {
-    margin: 0%;
-}
-
-.watched {
-    margin: 0%;
 }
 
 .gif_house {
@@ -89,9 +97,10 @@ body {
 h1 {
     text-align: center;
     padding: 4% 0%;
-    margin: 0%;
+    margin: 0% 2%;
     font-size: 1.5rem;
     border-left: .25rem solid black;
     border-right: .25rem solid black;
     border-radius: 1rem;
+    background-color: white;
 }
