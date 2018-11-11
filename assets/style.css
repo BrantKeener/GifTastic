@@ -155,3 +155,63 @@ h1 {
     margin: 0%;
     font-size: 2rem;
 }
+
+@media screen and (max-width: 1500px) {
+    .favorites, #controller {
+        font-size: 1.5rem;
+    }
+
+    #favorite_area, #button_and_input {
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .favorites, #controller {
+        font-size: 1rem;
+    }
+
+    #favorite_area, #button_and_input {
+        width: 175px;
+    }
+
+    #favorite_area {
+        bottom: -360px;
+    }
+    
+    #button_and_input {
+        bottom: -185px
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    #favorite_area, #button_and_input {
+        width: 150px;
+    }
+
+    #add_form {
+        max-width: 80%;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .favorites, #controller {
+        font-size: .75rem;
+    }
+
+    #favorite_area, #button_and_input {
+        width: 125px;
+    }
+
+    #favorite_area {
+        bottom: -370px;
+    }
+    
+    #button_and_input {
+        bottom: -195px
+    }
+
+    #main_col_center {
+        height: 100vh;
+    }
+}
