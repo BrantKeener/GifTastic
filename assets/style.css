@@ -28,7 +28,7 @@ body {
     border-left: .25rem solid var(--gold-font);
     border-right: .25rem solid var(--gold-font);
     border-radius: 1rem;
-    padding: 0% 2%;
+    padding: 0% 2% 3%;
     visibility: visible;
 }
 
@@ -213,6 +213,10 @@ h1 {
     #favorite_warning {
         font-size: 3rem;
     }
+
+    h1 {
+        font-size: 1.5rem;
+    }
 }
 
 @media screen and (max-width: 1200px) {
@@ -358,11 +362,11 @@ h1 {
     }
 
     h2 {
-        font-size: 1rem;
+        font-size: .9rem;
     }
 
     #start_message {
-        font-size: .9rem;
+        font-size: .7rem;
     }
 
     #favorite_warning {
