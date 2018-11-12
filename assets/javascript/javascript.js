@@ -91,7 +91,7 @@ function formToArray(addChecker) {
 // API call to GIPHY based on which butotns are pressed
 
 function gifRetriever(buttonPressed) { 
-    let apiQueryURL = `https://api.giphy.com/v1/gifs/search?q=${buttonPressed}&limit=10&api_key=t8Z9NbgWFivLfTMNNBZORucEY3zm66zC`;
+    let apiQueryURL = `https://api.giphy.com/v1/gifs/search?q=${buttonPressed}&offset=${sameGifCount}&api_key=t8Z9NbgWFivLfTMNNBZORucEY3zm66zC`;
     console.log(apiQueryURL);
     $.ajax({
         url: apiQueryURL,
