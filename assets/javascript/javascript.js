@@ -13,6 +13,7 @@ let gifFavorites = document.getElementById('favorite_gif');
 let favoritesLocalStorage = 1;
 let watchingAreaNode = 0;
 let gifIdNumber = 0;
+let sameGifCount = 0;
 // let downloadButton = document.getElementById('download');
 
 function buttonAdder() {
@@ -90,7 +91,8 @@ function formToArray(addChecker) {
 // API call to GIPHY based on which butotns are pressed
 
 function gifRetriever(buttonPressed) { 
-    let apiQueryURL = `https://api.giphy.com/v1/gifs/search?q=${buttonPressed}&api_key=t8Z9NbgWFivLfTMNNBZORucEY3zm66zC&`;
+    let apiQueryURL = `https://api.giphy.com/v1/gifs/search?q=${buttonPressed}&limit=10&api_key=t8Z9NbgWFivLfTMNNBZORucEY3zm66zC`;
+    console.log(apiQueryURL);
     $.ajax({
         url: apiQueryURL,
         method: 'GET'
@@ -111,6 +113,7 @@ function gifPublisherInitial(res, buttonPressed) {
             childCheck = gifBullPen.childNodes[3].hasChildNodes();
         };
         gifBullPen.setAttribute('class', buttonPressed);
+        console.log(res);
         for(let i = 0 ; i < 10; i ++) {
             let gifDiv = document.getElementById('gif_div');
             let gifStill = res.data[i].images.fixed_height_small_still.url;
@@ -133,8 +136,30 @@ function gifPublisherInitial(res, buttonPressed) {
             gifIdNumber++;
         };
     } else {
-        alert("10 more!");
+        sameGifCount += 10;
+        for(let i = 10 ; i < 20; i ++) {
+            let gifDiv = document.getElementById('gif_div');
+            let gifStill = res.data[i].images.fixed_height_small_still.url;
+            let gifMoving = res.data[i].images.fixed_height.url;
+            let gifHolder = document.createElement('figure');
+            let gifImage = document.createElement('img');
+            let gifCaption = document.createElement('figcaption');
+            let gifRating = res.data[i].rating;
+            gifCaption.textContent = `Category: ${buttonPressed} / Rating: ${gifRating}`;
+            gifImage.dataset.still = gifStill;
+            gifImage.dataset.move = gifMoving;
+            gifImage.dataset.state = 'still';
+            gifImage.setAttribute('id', 'gif' + gifIdNumber);
+            gifImage.setAttribute('class', 'topic_gif');
+            gifImage.src = gifStill;
+            gifHolder.appendChild(gifImage);
+            gifHolder.appendChild(gifCaption);
+            gifHolder.setAttribute('class', 'gif_house');
+            gifDiv.prepend(gifHolder);
+            gifIdNumber++;
+        };
     };
+    console.log(sameGifCount);
 };
 
 // A different button press will prepend 10 more of the same topic
