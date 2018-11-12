@@ -299,6 +299,14 @@ h1 {
     #start_message {
         font-size: .7rem;
     }
+
+    #button_and_input {
+        left: 70%;
+    }
+
+    #favorite_area {
+        left: 85%;
+    }
 }
 
 @media screen and (max-width: 750px) {
@@ -331,7 +339,15 @@ h1 {
 
     #favorite_area {
         left: 2%;
-        top: 40%;
+        top: 50%;
+        height: 200px;
+    }
+
+    #favorite_gif {
+        display: grid;
+        height: 250px;
+        grid-template-columns: 1fr;
+        justify-items: center;
     }
 
     #instructions {
@@ -352,5 +368,10 @@ h1 {
     #favorite_warning {
         font-family: 'Times New Roman', Times, serif;
         font-size: 2.5rem;
+    }
+
+    .gif_house {
+        min-width: 60%;
+        max-width: 60%;
     }
 }
