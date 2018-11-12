@@ -279,12 +279,12 @@ h1 {
     }
     
     h1 {
-        font-size: 1rem;
+        font-size: .7rem;
     }
 
     #instructions {
-        top: 20%;
-        height: 70%;
+        top: 12%;
+        height: 80%;
     }
 
     h2 {
@@ -321,7 +321,7 @@ h1 {
 
     #button_and_input {
         left: 2%;
-        top: 15%;
+        top: 16%;
     }
 
     #favorite_area {
