@@ -92,7 +92,6 @@ function formToArray(addChecker) {
 
 function gifRetriever(buttonPressed) { 
     let apiQueryURL = `https://api.giphy.com/v1/gifs/search?q=${buttonPressed}&offset=${sameGifCount}&api_key=t8Z9NbgWFivLfTMNNBZORucEY3zm66zC`;
-    console.log(apiQueryURL);
     $.ajax({
         url: apiQueryURL,
         method: 'GET'
@@ -108,21 +107,23 @@ function gifPublisherInitial(res, buttonPressed) {
     let classCheck = gifBullPen.getAttribute('class');
     let childCheck = gifBullPen.childNodes[3].hasChildNodes();
     if(buttonPressed !== classCheck) {
+        console.log('Hey!');
         while(childCheck === true) {
             gifBullPen.childNodes[3].removeChild(gifBullPen.childNodes[3].firstChild);
             childCheck = gifBullPen.childNodes[3].hasChildNodes();
         };
         gifBullPen.setAttribute('class', buttonPressed);
-        console.log(res);
         for(let i = 0 ; i < 10; i ++) {
             let gifDiv = document.getElementById('gif_div');
-            let gifStill = res.data[i].images.fixed_height_small_still.url;
+            let gifStillSmall = res.data[i].images.fixed_height_small_still.url;
+            let gifStill = res.data[i].images.fixed_height_still.url;
             let gifMoving = res.data[i].images.fixed_height.url;
             let gifHolder = document.createElement('figure');
             let gifImage = document.createElement('img');
             let gifCaption = document.createElement('figcaption');
             let gifRating = res.data[i].rating;
             gifCaption.textContent = `Category: ${buttonPressed} / Rating: ${gifRating}`;
+            gifImage.dataset.stillSmall = gifStillSmall;
             gifImage.dataset.still = gifStill;
             gifImage.dataset.move = gifMoving;
             gifImage.dataset.state = 'still';
@@ -139,13 +140,15 @@ function gifPublisherInitial(res, buttonPressed) {
         sameGifCount += 10;
         for(let i = 10 ; i < 20; i ++) {
             let gifDiv = document.getElementById('gif_div');
-            let gifStill = res.data[i].images.fixed_height_small_still.url;
+            let gifStillSmall = res.data[i].images.fixed_height_small_still.url;
+            let gifStill = res.data[i].images.fixed_height_still.url;
             let gifMoving = res.data[i].images.fixed_height.url;
             let gifHolder = document.createElement('figure');
             let gifImage = document.createElement('img');
             let gifCaption = document.createElement('figcaption');
             let gifRating = res.data[i].rating;
             gifCaption.textContent = `Category: ${buttonPressed} / Rating: ${gifRating}`;
+            gifImage.dataset.stillSmall = gifStillSmall;
             gifImage.dataset.still = gifStill;
             gifImage.dataset.move = gifMoving;
             gifImage.dataset.state = 'still';
@@ -159,11 +162,7 @@ function gifPublisherInitial(res, buttonPressed) {
             gifIdNumber++;
         };
     };
-    console.log(sameGifCount);
 };
-
-// A different button press will prepend 10 more of the same topic
-
 
 // Click on a gif to play, click again to stop
 
@@ -173,6 +172,9 @@ function gifPlayer(grabbedGif, gifParent) {
         dataGrab.state = 'running';
         gifStager(gifParent);
         grabbedGif.setAttribute('src', dataGrab.move);
+    } else {
+        dataGrab.state = 'still';
+        grabbedGif.setAttribute('src', dataGrab.still);
     };
 };
 
@@ -214,6 +216,6 @@ function stageClear() {
 function stopCleared(currentlyPlaying) {
     if(currentlyPlaying !== undefined) {
         currentlyPlaying.childNodes[0].dataset.state = 'still'
-        currentlyPlaying.childNodes[0].setAttribute('src', currentlyPlaying.childNodes[0].dataset.still);
+        currentlyPlaying.childNodes[0].setAttribute('src', currentlyPlaying.childNodes[0].dataset.stillSmall);
     };
 };
