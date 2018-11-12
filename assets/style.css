@@ -288,11 +288,11 @@ h1 {
     }
 
     h2 {
-        font-size: 1rem;
+        font-size: .9rem;
     }
 
     #start_message {
-        font-size: .9rem;
+        font-size: .7rem;
     }
 }
 
