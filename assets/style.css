@@ -280,7 +280,7 @@ h1 {
 @media screen and (max-width: 850px) {
     .gif_house {
         min-width: 60%;
-        max-width: 70%;
+        max-width: 60%;
     }
 
     #favorite_area:hover {
