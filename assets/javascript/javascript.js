@@ -57,8 +57,20 @@ document.addEventListener('click', function(e) {
         formValidation();
     }
     if(grabId === 'favorite') {
-        moveToFavorites();
+        if(gifPlaying.hasChildNodes()) {
+            moveToFavorites();
+        } else {
+            document.getElementById('instructions').style.visibility = 'visible';
+            document.getElementById('favorite_warning').style.visibility = 'visible';
+            window.scrollTo(0, 0);
+            setTimeout(warningMessageClear, 4500);
+        };
     };
+    if(grabId === 'start_button') {
+        document.getElementById('instructions').style.visibility = 'hidden';
+        document.getElementById('start_message').style.visibility = 'hidden';
+        document.getElementById('start_button').style.visibility = 'hidden';
+    }
 });
 
 // Turn text entered into the search field, and add to the end of existing butotns
@@ -185,6 +197,13 @@ function gifStager(gifParent) {
         stageClear();
     };
     gifPlaying.appendChild(gifParent);
+};
+
+// Favorites warning message clear
+
+function warningMessageClear() {
+    document.getElementById('instructions').style.visibility = 'hidden';
+    document.getElementById('favorite_warning').style.visibility = 'hidden';
 };
 
 // Clears currently playing gif and stores it in favorites

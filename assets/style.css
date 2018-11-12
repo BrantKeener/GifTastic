@@ -16,6 +16,45 @@ body {
     grid-template-columns: 1.5fr 1.5fr 1.25fr;
 }
 
+#instructions {
+    background: #800000;
+    height: 60%;
+    width: 45%;
+    position: absolute;
+    left: 30%;
+    top: 25%;
+    font-size: 1.5rem;
+    color: var(--gold-font);
+    border-left: .25rem solid var(--gold-font);
+    border-right: .25rem solid var(--gold-font);
+    border-radius: 1rem;
+    padding: 0% 2%;
+    visibility: visible;
+}
+
+#start_message {
+    visibility: visible;
+}
+
+#start_button {
+    position: relative;
+    left: 35%;
+    background-color: black;
+    border-color: var(--gold-font);
+    border-radius: .25rem;
+    padding: 2%;
+    color: var(--gold-font);
+}
+
+#favorite_warning {
+    position: absolute;
+    left: 5%;
+    top: -5%;
+    font-size: 4rem;
+    font-family: var(--main-font);
+    visibility: hidden;
+}
+
 #main_col_center {
     background-image: url(images/peter-lewicki-411606-unsplash.jpg);
     background-size: cover;
@@ -161,8 +200,18 @@ h1 {
         font-size: 1.5rem;
     }
 
+    #instructions {
+        font-size: 1.25rem;
+    }
+
     #favorite_area, #button_and_input {
         width: 200px;
+    }
+}
+
+@media screen and (max-width: 1365px) {
+    #favorite_warning {
+        font-size: 3rem;
     }
 }
 
@@ -181,6 +230,10 @@ h1 {
     
     #button_and_input {
         bottom: -185px
+    }
+
+    #instructions {
+        font-size: 1rem;
     }
 }
 
@@ -228,6 +281,11 @@ h1 {
     h1 {
         font-size: 1rem;
     }
+
+    #instructions {
+        top: 20%;
+        height: 70%;
+    }
 }
 
 @media screen and (max-width: 750px) {
@@ -261,5 +319,17 @@ h1 {
     #favorite_area {
         left: 2%;
         top: 40%;
+    }
+
+    #instructions {
+        left: 35%;
+        top: 15%;
+        height: 75%;
+        width: 50%;
+    }
+
+    #favorite_warning {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 2.5rem;
     }
 }
