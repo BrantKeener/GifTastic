@@ -8,7 +8,7 @@ This webapp will pull a set of 10 gifs based on user interaction with the UI.
 This webapp allows the user to enjoy a variety of gifs!
 
 ## Getting Started
-Click here to load the webpage and get started!
+Click [here](https://brantkeener.github.io/GifTastic/) to load the webpage and get started!
 
 ## Contributing to the Project
 This is a week long build to work with APIs.
